@@ -4,16 +4,20 @@ celery -A tasks worker --loglevel=info
 """
 
 
+import time
 from celery import Celery
 
 
-app = Celery(
+celery = Celery(
     'tasks',
     broker='redis://redis:6379/0',
     backend='redis://redis:6379/1')
 
 
-@app.task(name='celery_worker.tasks.event')
+@celery.task(name='celery_worker.tasks.event')
 def event(data):
     print('Recieved data', data)
-    return data
+    print('Computing data')
+    time.sleep(10)
+    print('Computation success')
+    return 'Success'
