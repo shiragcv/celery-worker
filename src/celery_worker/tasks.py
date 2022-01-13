@@ -6,6 +6,7 @@ celery -A tasks worker --loglevel=info
 
 import time
 from celery import Celery
+from billiard import process
 
 
 celery = Celery(
@@ -16,8 +17,4 @@ celery = Celery(
 
 @celery.task(name='celery_worker.tasks.event')
 def event(data):
-    print('Recieved data', data)
-    print('Computing data')
-    time.sleep(10)
-    print('Computation success')
-    return 'Success'
+    return f'{data.get("hostname")} -- {process.current_process()}'
