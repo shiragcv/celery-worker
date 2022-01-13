@@ -15,8 +15,8 @@ from billiard import process
 #     backend='redis://redis:6379/1')
 celery = Celery(
     'tasks',
-    broker='amqp://rabbitmq:5672',
-    backend='amqp://rabbitmq:5672')
+    broker='amqp://rabbitmq',
+    backend='redis://redis')
 
 
 @celery.task(name='celery_worker.tasks.event')
