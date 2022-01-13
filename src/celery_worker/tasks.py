@@ -17,4 +17,7 @@ celery = Celery(
 
 @celery.task(name='celery_worker.tasks.event')
 def event(data):
-    return f'{data.get("hostname")} -- {process.current_process()}'
+    hostname = data.get("hostname") 
+    current_process = process.current_process()
+
+    return f'{hostname} -- {current_process.name}'
